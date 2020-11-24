@@ -2,7 +2,6 @@ package com.dissanayake.assigment_mobileapplicationdevelopment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.dissanayake.assigment_mobileapplicationdevelopment.post.api.PostApi
 import com.dissanayake.assigment_mobileapplicationdevelopment.post.api.PostApiAll
@@ -30,31 +29,21 @@ class SecondActivity : AppCompatActivity() {
         var retro = retrofit.create(PostApi::class.java)
         var retroAll = retrofit.create(PostApiAll::class.java)
         var postCall = retro.posts
-        var postAllCall = retroAll.allPosts
+        var postAllCall: Call<MutableList<Post>>? = retroAll.allPosts
         // api class if success then do this, otherwise it was do not
-        postCall.enqueue(object : Callback<Post> {
-            override fun onResponse(call: Call<Post>, response: Response<Post>) {
+        postAllCall?.enqueue(object : Callback<MutableList<Post>> {
 
-                // for noe item
-//                var title = response.body()!!.title
-//                Log.d("second activity", title)
-//                textView2.text = title.toString()
-
-                // for all items
-
-                val allPostData = response.body()
-                allPostData.forEach { data ->
-                    val context = ""
-                    context + = "userId :" + data.userId + "\n"
-                    context + = "id :" + data.id+ "\n"
-                    context + = "title :" + data.title+ "\n"
-                    context + = "body" + data.body+ "\n"
+            override fun onResponse(call: Call<MutableList<Post>>, response: Response<MutableList<Post>>) {
+                var posts = response.body()
+                for(post in posts!!) {
+                    var context = ""
+                    context = "Title : " + post.title + "\n"
                     textView2.append(context)
                 }
             }
 
-            override fun onFailure(call: Call<Post>, t: Throwable) {
-
+            override fun onFailure(call: Call<MutableList<Post>>, t: Throwable) {
+                Log.d("Post Call", t.toString())
             }
 
         })
