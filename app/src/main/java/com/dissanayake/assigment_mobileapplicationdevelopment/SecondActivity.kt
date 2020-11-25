@@ -32,7 +32,6 @@ class SecondActivity : AppCompatActivity() {
         var postAllCall: Call<MutableList<Post>>? = retroAll.allPosts
         // api class if success then do this, otherwise it was do not
         postAllCall?.enqueue(object : Callback<MutableList<Post>> {
-
             override fun onResponse(call: Call<MutableList<Post>>, response: Response<MutableList<Post>>) {
                 var posts = response.body()
                 for(post in posts!!) {
