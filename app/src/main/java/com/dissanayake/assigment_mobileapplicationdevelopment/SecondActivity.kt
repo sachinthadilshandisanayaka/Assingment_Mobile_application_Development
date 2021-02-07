@@ -19,7 +19,6 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second2)
-
         // gson is a decoder
         val gson = GsonBuilder()
                 .create()
